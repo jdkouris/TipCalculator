@@ -58,9 +58,9 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .center, spacing: 20) {
-                CardView(cardLabelText: "Per Person", totalAmount: totalPerPerson, subtotalAmount: subTotalPerPerson, tipAmount: tipValuePerPerson)
+                CardView(cardLabelText: "PER PERSON", totalAmount: totalPerPerson, subtotalAmount: subTotalPerPerson, tipAmount: tipValuePerPerson)
                     .frame(width: geometry.size.width * 0.9, height: 100)
-                CardView(cardLabelText: "Full Bill Total", totalAmount: totalAmountWithTip, subtotalAmount: subTotal, tipAmount: tipValue)
+                CardView(cardLabelText: "TOTAL", totalAmount: totalAmountWithTip, subtotalAmount: subTotal, tipAmount: tipValue)
                     .frame(width: geometry.size.width * 0.9, height: 100)
                 
                 Picker("Tip Percentage", selection: $tipPercentage) {
@@ -71,7 +71,7 @@ struct ContentView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 
                 HStack {
-                    Text("TOTAL AMOUNT")
+                    Text("BILL AMOUNT")
                         .foregroundColor(.indigo)
                         .fontWeight(.black)
                     
@@ -90,7 +90,7 @@ struct ContentView: View {
                         .font(.system(size: 60, weight: .black, design: .rounded))
                         .keyboardType(.decimalPad)
                         .focused($isInputActive)
-                        
+                    
                         .toolbar {
                             ToolbarItemGroup(placement: .keyboard) {
                                 Spacer()
@@ -98,7 +98,7 @@ struct ContentView: View {
                                     isInputActive = false
                                 }
                             }
-                    }
+                        }
                 }
                 
                 HStack {
@@ -119,6 +119,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .preferredColorScheme(.light)
+            .preferredColorScheme(.dark)
     }
 }

@@ -14,57 +14,61 @@ struct CardView: View {
     var tipAmount = 6.37
     
     var body: some View {
-        ZStack {
-            Rectangle()
-                .foregroundColor(.gray)
-                .cornerRadius(20)
+        VStack(alignment: .leading, spacing: 0) {
+            Text(cardLabelText)
+                .foregroundColor(.indigo)
+                .fontWeight(.black)
             
-            HStack {
-                Spacer()
-                VStack(alignment: .leading) {
-                    Text(cardLabelText)
-                        .foregroundColor(.indigo)
-                        .fontWeight(.black)
-                    
-                    Text("$ \(totalAmount, specifier: "%.2f")")
-                        .font(.system(size: 40, weight: .black, design: .monospaced))
-                        .fontWeight(.black)
-                    
-                    Text("TOTAL")
-                        .font(.system(.caption, design: .rounded))
-                        .fontWeight(.light)
-                }
-                .foregroundColor(.white)
-                
-                Spacer()
-                
+            ZStack {
                 Rectangle()
-                    .foregroundColor(Color(red: 128/255, green: 128/255, blue: 128/255))
-                    .frame(width: 1, height: 80)
+                    .foregroundColor(.gray)
+                    .cornerRadius(20)
                 
-                Spacer()
-                
-                VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Spacer()
                     VStack(alignment: .leading) {
-                        Text("SUBTOTAL")
+                        
+                        Text("$ \(totalAmount, specifier: "%.2f")")
+                            .font(.system(size: 40, weight: .black, design: .monospaced))
+                            .fontWeight(.black)
+                        
+                        Text("TOTAL")
                             .font(.system(.caption, design: .rounded))
                             .fontWeight(.light)
-                        Text("$ \(subtotalAmount, specifier: "%.2f")")
-                            .font(.system(.body, design: .monospaced))
-                            .fontWeight(.black)
                     }
+                    .foregroundColor(.white)
                     
-                    VStack(alignment: .leading) {
-                        Text("TIP")
-                            .font(.system(.caption, design: .rounded))
-                            .fontWeight(.light)
-                        Text("$ \(tipAmount, specifier: "%.2f")")
-                            .font(.system(.body, design: .monospaced))
-                            .fontWeight(.black)
+                    Spacer()
+                    
+                    Rectangle()
+                        .foregroundColor(Color(red: 128/255, green: 128/255, blue: 128/255))
+                        .frame(width: 1, height: 70)
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        VStack(alignment: .leading) {
+                            Text("SUBTOTAL")
+                                .font(.system(.caption, design: .rounded))
+                                .fontWeight(.light)
+                            Text("$ \(subtotalAmount, specifier: "%.2f")")
+                                .font(.system(.body, design: .monospaced))
+                                .fontWeight(.black)
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text("TIP")
+                                .font(.system(.caption, design: .rounded))
+                                .fontWeight(.light)
+                            Text("$ \(tipAmount, specifier: "%.2f")")
+                                .font(.system(.body, design: .monospaced))
+                                .fontWeight(.black)
+                        }
                     }
+                    .foregroundColor(.white)
+                    Spacer()
                 }
-                .foregroundColor(.white)
-                Spacer()
+                .padding(5)
             }
         }
     }
@@ -73,6 +77,6 @@ struct CardView: View {
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         CardView(cardLabelText: "PER PERSON")
-            .frame(width: 300, height: 100)
+            .frame(width: 300, height: 150)
     }
 }
