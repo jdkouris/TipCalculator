@@ -26,17 +26,11 @@ struct CardView: View {
                 
                 HStack {
                     Spacer()
-                    VStack(alignment: .leading) {
                         
-                        Text("$ \(totalAmount, specifier: "%.2f")")
-                            .font(.system(size: 40, weight: .black, design: .monospaced))
-                            .fontWeight(.black)
-                        
-                        Text("TOTAL")
-                            .font(.system(.caption, design: .rounded))
-                            .fontWeight(.light)
-                    }
-                    .foregroundColor(.white)
+                    Text("$ \(totalAmount, specifier: "%.2f")")
+                        .foregroundColor(.white)
+                        .font(.system(size: 40, weight: .black, design: .monospaced))
+                        .fontWeight(.black)
                     
                     Spacer()
                     
@@ -66,6 +60,7 @@ struct CardView: View {
                         }
                     }
                     .foregroundColor(.white)
+                    
                     Spacer()
                 }
                 .padding(5)
