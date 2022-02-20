@@ -57,9 +57,15 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { geo in
             VStack(alignment: .center, spacing: 20) {
-                CardView(cardLabelText: "PER PERSON", totalAmount: totalPerPerson, subtotalAmount: subTotalPerPerson, tipAmount: tipValuePerPerson)
+                CardView(cardLabelText: "PER PERSON",
+                         totalAmount: totalPerPerson,
+                         subtotalAmount: subTotalPerPerson,
+                         tipAmount: tipValuePerPerson)
                     .frame(width: geo.size.width, height: 100)
-                CardView(cardLabelText: "TOTAL", totalAmount: totalAmountWithTip, subtotalAmount: subTotal, tipAmount: tipValue)
+                CardView(cardLabelText: "TOTAL",
+                         totalAmount: totalAmountWithTip,
+                         subtotalAmount: subTotal,
+                         tipAmount: tipValue)
                     .frame(width: geo.size.width, height: 100)
                 
                 Picker("Tip Percentage", selection: $tipPercentage) {
