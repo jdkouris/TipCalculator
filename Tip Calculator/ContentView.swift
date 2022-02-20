@@ -11,16 +11,29 @@ struct ContentView: View {
     @State private var checkAmount = ""
     @State private var numberOfPeople = 2
     @State private var tipPercentage = 2
-    @FocusState var isInputActive: Bool
+    @FocusState private var isInputActive: Bool
     
-    let tipPercentages = [10, 15, 20, 25, 0]
+    private let tipPercentages = [10, 15, 20, 25, 0]
     
-    var subTotal: Double {
+    private var subTotal: Double { Double(checkAmount) ?? 0 }
+    
+    private var subTotalPerPerson: Double {
+        let peopleCount = Double(numberOfPeople)
         let orderAmount = Double(checkAmount) ?? 0
-        return orderAmount
+        
+        return orderAmount / peopleCount
     }
     
-    var totalAmountWithTip: Double {
+    private var tipValue: Double {
+        let tipSelection = Double(tipPercentages[tipPercentage])
+        let orderAmount = Double(checkAmount) ?? 0
+        
+        return orderAmount / 100 * tipSelection
+    }
+    
+    private var tipValuePerPerson: Double { tipValue / Double(numberOfPeople) }
+    
+    private var totalAmountWithTip: Double {
         let tipSelection = Double(tipPercentages[tipPercentage])
         let orderAmount = Double(checkAmount) ?? 0
         
@@ -30,38 +43,24 @@ struct ContentView: View {
         return grandTotal
     }
     
-    var tipValue: Double {
-        let tipSelection = Double(tipPercentages[tipPercentage])
-        let orderAmount = Double(checkAmount) ?? 0
-        
-        return orderAmount / 100 * tipSelection
-    }
-    
-    var tipValuePerPerson: Double {
-        tipValue / Double(numberOfPeople)
-    }
-    
-    var totalPerPerson: Double {
+    private var totalPerPerson: Double {
         let peopleCount = Double(numberOfPeople)
         let amountPerPerson = totalAmountWithTip / peopleCount
         
         return amountPerPerson
     }
     
-    var subTotalPerPerson: Double {
-        let peopleCount = Double(numberOfPeople)
-        let orderAmount = Double(checkAmount) ?? 0
-        
-        return Double(orderAmount / peopleCount)
+    init() {
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(.indigo)
     }
     
     var body: some View {
-        GeometryReader { geometry in
+        GeometryReader { geo in
             VStack(alignment: .center, spacing: 20) {
                 CardView(cardLabelText: "PER PERSON", totalAmount: totalPerPerson, subtotalAmount: subTotalPerPerson, tipAmount: tipValuePerPerson)
-                    .frame(width: geometry.size.width * 0.9, height: 100)
+                    .frame(width: geo.size.width, height: 100)
                 CardView(cardLabelText: "TOTAL", totalAmount: totalAmountWithTip, subtotalAmount: subTotal, tipAmount: tipValue)
-                    .frame(width: geometry.size.width * 0.9, height: 100)
+                    .frame(width: geo.size.width, height: 100)
                 
                 Picker("Tip Percentage", selection: $tipPercentage) {
                     ForEach(0..<tipPercentages.count) {
@@ -70,20 +69,11 @@ struct ContentView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 
-                HStack {
-                    Text("BILL AMOUNT")
-                        .foregroundColor(.indigo)
-                        .fontWeight(.black)
-                    
-                    Spacer()
-                }
-                
+                TitleView(title: "BILL AMOUNT")
                 HStack {
                     Text("$")
                         .foregroundColor(.primary)
                         .font(.system(size: 60, weight: .black, design: .rounded))
-                    
-                    Spacer()
                     
                     TextField("Amount", text: $checkAmount)
                         .foregroundColor(.primary)
@@ -100,25 +90,31 @@ struct ContentView: View {
                             }
                         }
                 }
-                
-                HStack {
-                    Text("SPLIT")
-                        .foregroundColor(.indigo)
-                        .fontWeight(.black)
-                    
-                    Spacer()
-                }
-                
+                TitleView(title: "SPLIT")
                 GuestCountView(guestCount: $numberOfPeople)
             }
-            .padding()
         }
+        .padding()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .preferredColorScheme(.dark)
+            .preferredColorScheme(.light)
+    }
+}
+
+struct TitleView: View {
+    var title: String
+    
+    var body: some View {
+        HStack {
+            Text(title)
+                .foregroundColor(.indigo)
+                .fontWeight(.black)
+            
+            Spacer()
+        }
     }
 }
